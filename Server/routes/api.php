@@ -18,4 +18,5 @@ Route::get('/hello',function(Request $request){
 });
 
 // 建立API ，利用Controller 接收並處理前端資訊
-Route::post('/register',[AuthController::class,'handleRegister']);
+Route::post('/register',[AuthController::class,'handleRegister']); // 處理註冊
+Route::get('/getUserInfo/{email}',[AuthController::class,'handleGetUserInfo']); // 從網址獲取參數，傳遞給資料庫並獲取相對應的資料

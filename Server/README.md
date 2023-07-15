@@ -19,3 +19,14 @@
 ### 建立處理驗證的 Controller => AuthController.php
 
 取得前端資料並交給資料庫，再將資料庫資料回傳給前端
+
+## 資料庫 procedure
+
+### call signUp
+
+INSERT INTO user_test VALUES (myemail,userName,pwd);
+select \* from user_test where myemail = email ;
+
+### call getUserInfo
+
+select \* from user_test where myemail = email ;

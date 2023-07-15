@@ -1,7 +1,7 @@
 import axios from "axios"; // 引入 axios 工具
 
 // 後端給的網址
-const API_URL = "http://localhost/laravel/apiTest/public/index.php/api";
+const API_URL = "http://localhost/project-test/Server/public/index.php/api";
 
 class Auth {
   // class 內的 function 可以省略前綴
@@ -14,6 +14,12 @@ class Auth {
       userName,
       password,
     });
+  }
+
+  userInfo(email) {
+    // 現在要取得資料所以要用 【get】
+    // 利用網址參數傳遞給後端
+    return axios.get(API_URL + `/getUserInfo/${email}`);
   }
 }
 

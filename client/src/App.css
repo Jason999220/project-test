@@ -1,3 +1,14 @@
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.register {
+  border: 1px solid #000;
+  padding: 1rem;
+}
+.getData {
+  border: 1px solid #000;
+  padding: 1rem;
 }
