@@ -34,3 +34,34 @@ class AuthController extends Controller
         return $result;
     }
 }
+
+
+/*
+call signUp
+
+DELIMITER $$
+CREATE PROCEDURE signUp(myemail varchar(100),myuserName varchar(20),pwd int)
+BEGIN
+	INSERT INTO userinfo values (myemail,myuserName,pwd)
+    SELECT * from userinfo
+END $$
+DELIMITER ;
+
+
+*/
+
+
+
+/*
+
+call getUserInfo
+
+DELIMITER $$
+CREATE PROCEDURE getUserInfo(myemail varchar(100))
+BEGIN
+    SELECT * from userinfo where email = myemail;
+END $$
+DELIMITER ;
+
+
+*/
