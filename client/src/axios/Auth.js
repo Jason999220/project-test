@@ -21,6 +21,16 @@ class Auth {
     // 利用網址參數傳遞給後端
     return axios.get(API_URL + `/getUserInfo/${email}`);
   }
+
+
+  // 綠界測試
+  order(item, itemNO, des, price) {
+    // 現在要取得資料所以要用 【get】
+    // 利用網址參數傳遞給後端
+    return axios.post(API_URL + `/store`, {
+      item, itemNO, des, price
+    });
+  }
 }
 
 // new 一個 Auth 的實例 ，export default 默認導出 供其他程式直接引用

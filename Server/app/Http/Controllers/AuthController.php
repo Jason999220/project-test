@@ -33,6 +33,18 @@ class AuthController extends Controller
         // return 給前端
         return $result;
     }
+
+
+
+    function handleOrder(Request $request)
+    {
+        $item = $request->input('item');
+        $itemNO = $request->input('itemNO');
+        $des = $request->input('des');
+        $price = $request->input('price');
+        return [$item,$itemNO,$des,$price];
+    
+    }
 }
 
 
