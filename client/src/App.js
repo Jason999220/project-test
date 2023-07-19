@@ -10,7 +10,7 @@ function App() {
 
   const handleRegister = () => {
     // 將資料發送到 AuthService 的 register
-    Auth.signup(email, userName, password).then((result) => {
+    Auth.signup(userName, email, password).then((result) => {
       console.log(result);
       console.log(result.data);
     });

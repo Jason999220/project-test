@@ -1,16 +1,11 @@
 <?php
-namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
-    return view('order');
+    return view('welcome');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-
-
-require __DIR__.'/auth.php';
+Route::get('/test', function () {
+    return view('test');
+});
