@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
+
 
 
 class UserController extends Controller
@@ -19,15 +22,16 @@ class UserController extends Controller
     
         $email = $validatedData['email'];
     
-        // Check if email already exists
+        // 信箱是否存在
         $emailExists = DB::select("SELECT COUNT(*) AS count FROM users WHERE email = ?", [$email])[0]->count;
     
         if ($emailExists) {
             return response()->json(['result' => '帳號重複'], 400);
         }
     
-        // Insert new user
+        // 新增使用者
         $userName = $validatedData['name'];
+        // 將使用者的密碼以安全的方式存儲在資料庫中
         $hashPassword = bcrypt($validatedData['password']);
     
         DB::insert("INSERT INTO users (userName, email, hashpassword) VALUES (?, ?, ?)", [$userName, $email, $hashPassword]);
@@ -46,24 +50,34 @@ class UserController extends Controller
         $email = $fields['email'];
         $password = $fields['password'];
 
-        $result = DB::select("CALL your_procedure_name(?, ?, @mytoken)", [$email, $password]);
+        // 先查詢資料庫取得該使用者的雜湊密碼
+        $hashPassword = DB::select("SELECT hashpassword FROM users WHERE email = ?", [$email])[0]->hashpassword;
 
-        // 获取存储过程中设置的令牌值
-        $tokenResult = DB::select("SELECT @mytoken AS token")[0]->token;
-
-        if ($result[0]->result == '登入成功') {
-            $response = [
-                'result' => $result[0]->result,
-                'token' => $tokenResult
-            ];
+        // 使用Hash::check方法比對密碼
+        if (Hash::check($password, $hashPassword)){
+            $result = DB::select("CALL login(?, ?, @mytoken)", [$email, $password]);
+            $tokenResult = DB::select("SELECT @mytoken AS token")[0]->token;
+            if ($result[0]->result == '登入成功') {
+                $response = [
+                    'result' => $result[0]->result,
+                    'token' => $tokenResult
+                ];
+            } else {
+                $response = [
+                    'result' => $result[0]->result,
+                    'token' => null
+                ];
+            }
+            return response($response, 201);
         } else {
             $response = [
-                'result' => $result[0]->result,
+                'result' => '帳號或密碼錯誤',
                 'token' => null
             ];
+            return response($response, 401);
         }
 
-        return response($response, 201);
+
     }
 
 
@@ -73,10 +87,8 @@ class UserController extends Controller
         $user = $request->user();
         $token = $user->currentAccessToken();
 
-        // 调用存储过程
-        DB::select("CALL your_procedure_name(?, @result)", [$token->id]);
+        DB::select("CALL logout(?, @result)", [$token->id]);
 
-        // 获取存储过程中设置的结果值
         $result = DB::select("SELECT @result AS result")[0]->result;
 
         return [
