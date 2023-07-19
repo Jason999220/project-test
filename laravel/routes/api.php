@@ -2,9 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CasesController;
 
 
 /*
@@ -41,7 +43,20 @@ Route::group(['prefix' => 'api'], function () {
     Route::post('update-skills', [InformationController::class, 'updateSkills']);
 });
 
+// CasesController
+Route::post('cases/insert', [CasesController::class, 'insertCase']);
+Route::get('cases/search', [CasesController::class, 'selectCases']);
+Route::get('cases', [CasesController::class, 'getCases']);
+Route::post('cases/checkstatus', [CaseController::class, 'checkStatus']);
 
+
+
+
+
+
+
+
+// 綠界
 // Route::post('/payment/pay', [PaymentController::class, 'payByECPay']);
 Route::post('payment/pay', [PaymentController::class, 'payByECPay']);
 
