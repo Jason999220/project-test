@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class InformationController extends Controller
 {
-    //修改大頭照 
+    //修改大頭照
     public function uploadPhoto(Request $request)
     {
         if ($request->hasFile('photo')) {
@@ -45,7 +45,7 @@ class InformationController extends Controller
         }
     }
 
-    //修改電話 
+    //修改電話
     public function updatePhone($myuserID, $myphone)
     {
         try {
@@ -87,7 +87,7 @@ class InformationController extends Controller
     }
 
 
-    // 更新擅長
+    // 更新擅長工具
     public function updateSkills(Request $request)
     {
         $myuserID = $request->input('myuserID');
@@ -102,5 +102,5 @@ class InformationController extends Controller
 
         return response()->json(['result' => $result]);
     }
-
+    // 更新專長
 }
